@@ -13,7 +13,24 @@ public class BirthNumberHelper : IBirthNumberHelper
     public DateTime GetDateOfBirthFromBirthNumber(string birthNumber)
     {
         // TODO implementovať získanie dátumu narodenia osoby z rodného čísla.
-        throw new NotImplementedException();
+        string cleanNumber = birthNumber.Replace("/", "");
+
+        string yearPart = cleanNumber.Substring(0, 2);
+        string monthPart = cleanNumber.Substring(2, 2);
+        string dayPart = cleanNumber.Substring(4, 2);
+
+        int year = int.Parse(yearPart);
+        int month = int.Parse(monthPart);
+        int day = int.Parse(dayPart);
+
+        year += year < 54 ? 2000 : 1900;
+
+        if (month > 50)
+        {
+            month -= 50;
+        }
+
+        return new DateTime(year, month, day);
     }
 
     /// <summary>
@@ -25,7 +42,17 @@ public class BirthNumberHelper : IBirthNumberHelper
     public int GetAgeFromBirthNumber(string birthNumber)
     {
         // TODO implementovať získanie veku osoby z rodného čísla.
-        throw new NotImplementedException();
+        DateTime dateOfBirth = GetDateOfBirthFromBirthNumber(birthNumber);
+
+        DateTime today = DateTime.Today;
+        int age = today.Year - dateOfBirth.Year;
+
+        if (today.Month < dateOfBirth.Month || (today.Month == dateOfBirth.Month && today.Day < dateOfBirth.Day))
+        {
+            age--;
+        }
+
+        return age; ;
     }
 
     /// <summary>
@@ -37,6 +64,10 @@ public class BirthNumberHelper : IBirthNumberHelper
     public Sex GetSexFromBirthNumber(string birthNumber)
     {
         // TODO implementovať získanie pohlavia osoby z rodného čísla.
-        throw new NotImplementedException();
+        string cleanNumber = birthNumber.Replace("/", "");
+
+        int month = int.Parse(cleanNumber.Substring(2, 2));
+
+        return month > 50 ? Sex.Female : Sex.Male;
     }
 }
