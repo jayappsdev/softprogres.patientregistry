@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Options;
+using Microsoft.Win32;
 using ServiceStack;
 using SoftProgres.PatientRegistry.Api.ServiceModel;
 using SoftProgres.PatientRegistry.Desktop.Config;
@@ -9,6 +10,9 @@ using SoftProgres.PatientRegistry.Desktop.Helpers;
 using SoftProgres.PatientRegistry.Desktop.Models;
 using SoftProgres.PatientRegistry.Desktop.Views.Pages;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Text;
+using System.Windows;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 using MessageBox = System.Windows.MessageBox;
@@ -137,6 +141,14 @@ public partial class PatientRegistryViewModel(
         // TODO imeplementuje MessageBox, ktorý sa užívateľa spýta, či chce naozaj odstrániť pacienta.
         // nastavte premennú shouldDelete na true, ak užívateľ zaklikne "Áno".
 
+        var result = MessageBox.Show($"Ste si istý, že naozaj chcete odstrániť pacienta {SelectedPatient.LastName} ?", "Potvrdenie vymazania",
+                                    System.Windows.MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+        if (result == System.Windows.MessageBoxResult.Yes)
+        {
+            shouldDelete = true;
+        }
+
         if (shouldDelete)
         {
             IsLoading = true;
@@ -179,7 +191,47 @@ public partial class PatientRegistryViewModel(
     {
         // TODO Naprogramujte funkcionalitu exportu dát zoznamu pacientov do CSV.
         // Užívateľ si musí vedieť vybrať cieľový súbor cez systémový dialog.
-        await Task.Delay(0);
+        SaveFileDialog saveFileDialog = new SaveFileDialog
+        {
+            Filter = "CSV file (*.csv)|*.csv",
+            FileName = "DataGridExport.csv"
+        };
+
+        if (saveFileDialog.ShowDialog() == true)
+        {
+            try
+            {
+                string csvContent = GenerateCsvContent();
+                await WriteToFileAsync(saveFileDialog.FileName, csvContent);
+                MessageBox.Show("Data exported successfully.", "Export to CSV", System.Windows.MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to export data. Error: {ex.Message}", "Export Error", System.Windows.MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+    }
+
+    private string GenerateCsvContent()
+    {
+        StringBuilder csvData = new StringBuilder();
+
+        csvData.AppendLine("Id,FirstName,LastName,State,Email");
+
+        foreach (var item in Patients)
+        {
+            csvData.AppendLine($"{item.Id},{item.FirstName},{item.LastName}, {item.State}, {item.Email}");
+        }
+
+        return csvData.ToString();
+    }
+
+    private async Task WriteToFileAsync(string filePath, string content)
+    {
+        using (StreamWriter writer = new StreamWriter(filePath, false, Encoding.UTF8))
+        {
+            await writer.WriteAsync(content);
+        }
     }
 
     private bool CanExportToCsv()
