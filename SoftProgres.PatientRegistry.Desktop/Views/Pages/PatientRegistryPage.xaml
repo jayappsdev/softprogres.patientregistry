@@ -16,6 +16,7 @@
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       mc:Ignorable="d">
     <Page.Resources>
+        <converters:FullAdressConverter x:Key="FullAdressConverter" />
         <converters:SexEnumToStringConverter x:Key="SexEnumToStringConverter" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converters:CollectionNotEmptyToVisibilityConverter x:Key="CollectionToVisibilityConverter" />
@@ -91,20 +92,29 @@
                 <DataGridTextColumn Header="Meno" Binding="{Binding FirstName}" />
                 <DataGridTextColumn Header="Priezvisko" Binding="{Binding LastName}" />
                 <DataGridTextColumn Header="Vek" Binding="{Binding Age}" />
-                
-                <!-- TODO Zobrazte pohlavie pacienta s použitím implementovaného SexEnumToStringConverter-a --> 
-                <DataGridTextColumn Header="Pohlavie" />
-                
+
+                <!-- TODO Zobrazte pohlavie pacienta s použitím implementovaného SexEnumToStringConverter-a -->
+                <DataGridTextColumn Header="Pohlavie" Binding="{Binding Sex, Converter={StaticResource SexEnumToStringConverter}}" />
+
                 <DataGridTextColumn Header="E-mail" Binding="{Binding Email}" />
                 <DataGridTextColumn Header="Telefón" Binding="{Binding PhoneNumber}" />
-                
+
                 <!-- TODO Naformátujte dátum do formátu dd.mm.rrrr priamo v bindingu -->
-                <DataGridTextColumn Header="Narodený" Binding="{Binding DateOfBirth}" />
-                
+                <DataGridTextColumn Header="Narodený" Binding="{Binding DateOfBirth, StringFormat=dd.MM.yyyy}" />
+
                 <!-- TODO V tomto stĺpci zobrazte celú daresu v tvare: Ulica Číslo, PSČ Mesto, Štát 
                      Napríklad "Komenského 665/7, 956 18 Bošany, Slovensko" -->
-                <DataGridTextColumn Header="Adresa" />
-                
+                <DataGridTextColumn Header="Adresa">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource FullAdressConverter}">
+                            <Binding Path="StreetAndNumber" />
+                            <Binding Path="PostalCode" />
+                            <Binding Path="City" />
+                            <Binding Path="State" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+
                 <DataGridTextColumn Header="Pracovisko" Binding="{Binding Workplace}" />
             </DataGrid.Columns>
         </DataGrid>

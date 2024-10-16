@@ -44,5 +44,78 @@
             Content="Uložiť" 
             Command="{Binding ViewModel.SavePatientCommand}"
             Icon="{ui:SymbolIcon Symbol=Save24}"></ui:Button>
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+                <StackPanel Orientation="Vertical" Margin="10,0,20,0">
+                    <TextBlock Text="Rodné číslo:" VerticalAlignment="Center" />
+                    <TextBox Text="{Binding ViewModel.CurrentPatient.BirthNumber, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="0,5,0,0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Margin="10,0,20,0">
+                    <TextBlock Text="Email:" VerticalAlignment="Center" />
+                    <TextBox Text="{Binding ViewModel.CurrentPatient.Email, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="0,5,0,0"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+                <StackPanel Orientation="Vertical" Margin="10,0,20,0">
+                    <TextBlock Text="Meno:" VerticalAlignment="Center" />
+                    <TextBox Text="{Binding ViewModel.CurrentPatient.FirstName, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="0,5,0,0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Margin="10,0,20,0">
+                    <TextBlock Text="Priezvisko:" VerticalAlignment="Center" />
+                    <TextBox Text="{Binding ViewModel.CurrentPatient.LastName, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="0,5,0,0"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+                <StackPanel Orientation="Vertical" Margin="10,0,20,0">
+                    <TextBlock Text="Tel. číslo:" VerticalAlignment="Center" />
+                    <TextBox Text="{Binding ViewModel.CurrentPatient.PhoneNumber, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="0,5,0,0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Margin="10,0,20,0">
+                    <TextBlock Text="Práca:" VerticalAlignment="Center" />
+                    <TextBox Text="{Binding ViewModel.CurrentPatient.Workplace, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="0,5,0,0"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+                <StackPanel Orientation="Vertical" Margin="10,0,20,0">
+                    <TextBlock Text="Ulica:" VerticalAlignment="Center" />
+                    <TextBox Text="{Binding ViewModel.CurrentPatient.StreetAndNumber, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="0,5,0,0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Margin="10,0,20,0">
+                    <TextBlock Text="Mesto:" VerticalAlignment="Center" />
+                    <TextBox Text="{Binding ViewModel.CurrentPatient.City, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="0,5,0,0"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+                <StackPanel Orientation="Vertical" Margin="10,0,20,0">
+                    <TextBlock Text="PSČ:" VerticalAlignment="Center" />
+                    <TextBox Text="{Binding ViewModel.CurrentPatient.PostalCode, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="0,5,0,0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Margin="10,0,20,0">
+                    <TextBlock Text="Štát:" VerticalAlignment="Center" />
+                    <TextBox Text="{Binding ViewModel.CurrentPatient.State, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="0,5,0,0"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
     </StackPanel>
 </Page>
