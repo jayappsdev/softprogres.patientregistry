@@ -1,4 +1,6 @@
-﻿namespace SoftProgres.PatientRegistry.Api.Validators;
+﻿using System.Text.RegularExpressions;
+
+namespace SoftProgres.PatientRegistry.Api.Validators;
 
 public class BirthNumberValidator : IBirthNumberValidator
 {
@@ -11,6 +13,24 @@ public class BirthNumberValidator : IBirthNumberValidator
     {
         // TODO Implementujte validáciu rodného čísla na základe zákona 301/1995 Z. z. § 2 
         // TODO https://www.slov-lex.sk/pravne-predpisy/SK/ZZ/1995/301/#paragraf-2
-        throw new NotImplementedException();
+        var regex = new Regex(@"^\d{6}/?\d{3,4}$");
+        if (!regex.IsMatch(birthNumber))
+        {
+            return false;
+        }
+
+        string cleanNumber = birthNumber.Replace("/", "");
+
+        if (cleanNumber.Length == 10)
+        {
+            long birthNumberNumeric = long.Parse(cleanNumber);
+
+            if (birthNumberNumeric % 11 != 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

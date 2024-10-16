@@ -44,6 +44,10 @@ public class DataProvider(IDbConnectionFactory dbDbConnectionFactory, IBirthNumb
     {
         using var dbConnection = _dbConnectionFactory.OpenDbConnection();
 
+        DateTime dateOfBirth = _birthNumberHelper.GetDateOfBirthFromBirthNumber(patientData.BirthNumber);
+        int age = _birthNumberHelper.GetAgeFromBirthNumber(patientData.BirthNumber);
+        var sex = _birthNumberHelper.GetSexFromBirthNumber(patientData.BirthNumber);
+
         // Vytvor objekt nového pacienta, ktorý sa uloží do databázy
         var newPatient = new Patient()
         {
@@ -71,6 +75,10 @@ public class DataProvider(IDbConnectionFactory dbDbConnectionFactory, IBirthNumb
     public async Task<Patient> UpdatePatientAsync(long patientId, PatientData patientData)
     {
         using var dbConnection = _dbConnectionFactory.OpenDbConnection();
+
+        DateTime dateOfBirth = _birthNumberHelper.GetDateOfBirthFromBirthNumber(patientData.BirthNumber);
+        int age = _birthNumberHelper.GetAgeFromBirthNumber(patientData.BirthNumber);
+        var sex = _birthNumberHelper.GetSexFromBirthNumber(patientData.BirthNumber);
 
         // Vytvor objekt pacienta so zmenenými údajmi, ktorý sa uloží do databázy
         var modifiedPatient = new Patient()
