@@ -1,0 +1,48 @@
+﻿<Page x:Class="SoftProgres.PatientRegistry.Desktop.Views.Pages.EditPatientPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:SoftProgres.PatientRegistry.Desktop.Views.Pages"
+      xmlns:converters="clr-namespace:SoftProgres.PatientRegistry.Desktop.Converters"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      Title="DashboardPage"
+      d:DataContext="{d:DesignInstance local:EditPatientPage,
+                                     IsDesignTimeCreatable=False}"
+      d:DesignHeight="450"
+      d:DesignWidth="800"
+      ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+      ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      mc:Ignorable="d">
+    <Page.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"></converters:BoolToVisibilityConverter>
+    </Page.Resources>
+    <StackPanel Margin="42">
+        <StackPanel Orientation="Horizontal">
+            <ui:Button
+                Command="{Binding ViewModel.GoBackCommand}"
+                Icon="{ui:SymbolIcon Symbol=ArrowLeft24}" />
+            <TextBlock
+                Margin="24 0 0 0"
+                FontSize="20"
+                FontWeight="Medium"
+                VerticalAlignment="Center"
+                Text="Pridať alebo upraviť pacienta" />
+        </StackPanel>
+        <ProgressBar 
+            Margin="0 12 0 0"
+            IsIndeterminate="True"
+            Visibility="{Binding ViewModel.IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        <!-- TODO Vytvorte formulár na vytvorenie/zmenu pacienta, ktorý bude nabindovaný na properties objektu Pacienta
+         z ViewModel-u. Vzhľad, použité elementy a rozloženie formulára je na vás.
+         Meniť sa budú dať nasledujúce údaje: Rodné číslo, Meno, Priezvisko, E-mail, Telefón, Ulica, Mesto, PSČ, Štát, Práca.
+         Hodnoty Id, Vek, Dátum narodenia a Pohlavie nemeníte, sú riešené automaticky na backende.
+         Formulár sa odošle zavolaním commandu SavePatientCommand. Validáciu polí riešiť nemusíte. -->
+        <ui:Button 
+            Margin="0 12 0 0"
+            Content="Uložiť" 
+            Command="{Binding ViewModel.SavePatientCommand}"
+            Icon="{ui:SymbolIcon Symbol=Save24}"></ui:Button>
+    </StackPanel>
+</Page>
