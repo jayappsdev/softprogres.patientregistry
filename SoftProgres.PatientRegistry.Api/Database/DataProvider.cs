@@ -52,6 +52,9 @@ public class DataProvider(IDbConnectionFactory dbDbConnectionFactory, IBirthNumb
         var newPatient = new Patient()
         {
             BirthNumber = patientData.BirthNumber,
+            DateOfBirth = dateOfBirth,
+            Age = age,
+            Sex = sex,
             FirstName = patientData.FirstName,
             LastName = patientData.LastName,
             Email = patientData.Email,
@@ -85,6 +88,9 @@ public class DataProvider(IDbConnectionFactory dbDbConnectionFactory, IBirthNumb
         {
             Id = patientId,
             BirthNumber = patientData.BirthNumber,
+            DateOfBirth = dateOfBirth,
+            Age = age,
+            Sex = sex,
             FirstName = patientData.FirstName,
             LastName = patientData.LastName,
             Email = patientData.Email,
